@@ -5,7 +5,7 @@
 #include <QMainWindow>
 #include <QFile>
 #include <QFileDialog>
-
+#include "morze/morze.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,6 +26,7 @@ public:
     QString getLongSound();
     QString getDelimetr();
     QString getDelimrtrSound();
+    morze::Dictionary getDictionary();
 
     void setShortSymbol(QString symbol);
     void setLongSumbol(QString symbol);
@@ -33,6 +34,7 @@ public:
     void setLongSound(QString fileName);
     void setDelimetr(QString symbol);
     void setDelimetrSound(QString fileName);
+    void updateDict();
 private slots:
     void on_Settings_button_clicked();
 
@@ -48,6 +50,8 @@ private:
     QString shortSound_ = "short.wav";
     QString longSound_ = "long.wav";
     QString delimetrSound_ = "pause.wav";
+    morze::Dictionary dict;
+
 
 };
 #endif // MAINWINDOW_H

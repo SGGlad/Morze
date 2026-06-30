@@ -61,6 +61,11 @@
      <height>141</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
   </widget>
   <widget class="QPushButton" name="SaveResultWAV">
    <property name="geometry">
@@ -135,6 +140,11 @@
      <width>491</width>
      <height>151</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
    </property>
   </widget>
  </widget>

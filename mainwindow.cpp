@@ -2,7 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "settings.h"
 #include "encriptor.h"
-#include "decriptor.h".h"
+#include "decriptor.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("Шифрофщик Морзе");
+    dict.Set_dictionary(longSymbol_, shortSymbol_, delimetr_);
 }
 
 MainWindow::~MainWindow()
@@ -23,6 +24,7 @@ QString MainWindow::getShortSound(){return shortSound_;}
 QString MainWindow::getLongSound(){return longSound_;}
 QString MainWindow::getDelimetr(){return delimetr_;}
 QString MainWindow::getDelimrtrSound(){return delimetrSound_;}
+morze::Dictionary MainWindow::getDictionary(){return dict;}
 
 void MainWindow::setShortSymbol(QString symbol){
     shortSymbol_ = symbol;
@@ -42,7 +44,9 @@ void MainWindow::setDelimetr(QString symbol){
 void MainWindow::setDelimetrSound(QString fileName){
     delimetrSound_ = fileName;
 }
-
+void MainWindow::updateDict(){
+    dict.Set_dictionary(longSymbol_, shortSymbol_, delimetr_);
+}
 
 void MainWindow::on_Settings_button_clicked()
 {

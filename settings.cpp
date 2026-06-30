@@ -103,7 +103,7 @@ void Settings::on_ApplyButton_clicked()
     main_window->setShortSound(settingShortSound_);
     main_window->setLongSound(settingLongSound_);
     main_window->setDelimetrSound(settingDelimetrSound_);
-    delete this;
+    main_window->updateDict();
 }
 
 void Settings::on_CancelButton_clicked()

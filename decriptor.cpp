@@ -36,7 +36,7 @@ void Decriptor::on_FromTXT_clicked()
 
 void Decriptor::on_DecripteButton_clicked()
 {
-    decriptedText = encriptedText;
+    decriptedText = morze::Decript_to_en(encriptedText, main_window->getDictionary());
     ui->DecriptedText->setText(decriptedText);
 }
 
