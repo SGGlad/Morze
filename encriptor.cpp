@@ -43,8 +43,12 @@ void Encriptor::on_FromTXT_clicked()
 
 void Encriptor::on_EncodeButton_clicked()
 {
+    try{
     encoderedText = morze::Encript_from_en(originalText, main_window->getDictionary());
     ui->EncoderedText->setPlainText(encoderedText);
+    }catch(...){
+        ui->EncoderedText->setText("Не удалось зашифровать");
+    }
 }
 
 

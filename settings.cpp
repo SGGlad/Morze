@@ -21,10 +21,13 @@ Settings::~Settings()
 void Settings::on_ShortSymbol_textEdited(const QString &symbol)
 {
     if (symbol != ""){
-        settingShortSymbol_ = symbol;
-        if (ui->ShortSymbolTextError->text() != ""){
+        if (symbol != settingLongSymbol_ && symbol != settingDelimetr_){
+            settingShortSymbol_ = symbol;
             ui->ShortSymbolTextError->setText("");
             ui->ApplyButton->setEnabled(true);
+        }else{
+            ui->ShortSymbolTextError->setText("Символ уже используется");
+            ui->ApplyButton->setEnabled(false);
         }
     }else{
         ui->ShortSymbolTextError->setText("Пустое поле");
@@ -34,10 +37,13 @@ void Settings::on_ShortSymbol_textEdited(const QString &symbol)
 void Settings::on_LongSymbol_textEdited(const QString &symbol)
 {
     if (symbol != ""){
-        settingLongSymbol_ = symbol;
-        if (ui->LongSymbolTextError->text() != ""){
+        if (symbol != settingShortSymbol_ && symbol!=settingDelimetr_){
+            settingLongSymbol_ = symbol;
             ui->LongSymbolTextError->setText("");
             ui->ApplyButton->setEnabled(true);
+        }else{
+            ui->LongSymbolTextError->setText("Символ уже используется");
+            ui->ApplyButton->setEnabled(false);
         }
     }else{
         ui->LongSymbolTextError->setText("Пустое поле");
@@ -47,10 +53,13 @@ void Settings::on_LongSymbol_textEdited(const QString &symbol)
 void Settings::on_Delimetr_textEdited(const QString &symbol)
 {
     if (symbol != ""){
-        settingDelimetr_ = symbol;
-        if (ui->DelimetrSymbolTextError->text() != ""){
+        if (symbol != settingLongSymbol_ && symbol != settingShortSymbol_){
+            settingDelimetr_ = symbol;
             ui->DelimetrSymbolTextError->setText("");
             ui->ApplyButton->setEnabled(true);
+        }else{
+            ui->DelimetrSymbolTextError->setText("Символ уже используется");
+            ui->ApplyButton->setEnabled(false);
         }
     }else{
         ui->DelimetrSymbolTextError->setText("Пустое поле");
@@ -62,21 +71,36 @@ void Settings::on_SetShortSound_clicked()
 {
     try{
         QString filename = QFileDialog::getOpenFileName(this, "Выбор файла", ("*wav"));
-        settingShortSound_ = filename;
+        if (filename != settingDelimetrSound_ && filename != settingLongSound_){
+            settingShortSound_ = filename;
+            ui->ShortSoundError->setText("");
+        }else{
+            ui->ShortSoundError->setText("Уже используется");
+        }
     }catch(...){}
 }
 void Settings::on_SetLongSound_clicked()
 {
     try{
         QString filename = QFileDialog::getOpenFileName(this, "Выбор файла ", ("*wav"));
-        settingLongSound_ = filename;
+        if (filename != settingDelimetrSound_ && filename != settingShortSound_){
+            settingLongSound_ = filename;
+            ui->LongSoundError->setText("");
+        }else{
+            ui->LongSoundError->setText("Уже используется");
+        }
     }catch(...){}
 }
 void Settings::on_SetDelimetrSound_clicked()
 {
     try{
         QString filename = QFileDialog::getOpenFileName(this, "Выбор файла", ("*wav"));
-        settingDelimetrSound_ = filename;
+        if (filename != settingLongSound_ && filename != settingShortSound_){
+             settingDelimetrSound_ = filename;
+            ui->DelimrtrSoundError->setText("");
+        }else{
+            ui->DelimrtrSoundError->setText("Уже используется");
+        }
     }catch(...){}
 }
 

@@ -131,10 +131,78 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
     international_decode[s+d+s+d+s+d+l+d+s+d+s+d+l] = "$";
     international_decode[s+d+l+d+l+d+s+d+l+d+s] = "@";
     // make for russian
+    //fill the russian ddictionary's variant (FROM morze code)
+    ru_decode[s+d+l] = "а";
+    ru_decode[l+d+s+s+s] = "б";
+    ru_decode[s+l+l] = "в";
+    ru_decode[l+l+s] = "г";
+    ru_decode[l+s+s] = "д";
+    ru_decode[s] = "е";
+    ru_decode[s] = "ё";
+    ru_decode[s+s+s+l] = "ж";
+    ru_decode[l+l+s+s] = "з";
+    ru_decode[s+s] = "и";
+    ru_decode[s+l+l+l] = "й";
+    ru_decode[l+s+l] = "к";
+    ru_decode[s+l+s+s] = "л";
+    ru_decode[l+l] = "м";
+    ru_decode[l+s] = "н";
+    ru_decode[l+l+l] = "о";
+    ru_decode[s+l+l+s] = "п";
+    ru_decode[s+l+s] = "р";
+    ru_decode[s+l+s] = "с";
+    ru_decode[l] = "т";
+    ru_decode[s+s+l] = "у";
+    ru_decode[s+s+l+s] = "ф";
+    ru_decode[s+s+s+s] = "х";
+    ru_decode[l+s+l+s] = "ц";
+    ru_decode[l+l+l+s] = "ч";
+    ru_decode[l+l+l+l] = "ш";
+    ru_decode[l+l+s+l] = "щ";
+    ru_decode[l+l+s+s+l+s] = "ъ";
+    ru_decode[l+s+l+l] = "ы";
+    ru_decode[l+s+s+l] = "ь";
+    ru_decode[s+s+l+s+s] = "э";
+    ru_decode[s+s+l+l] = "ю";
+    ru_decode[s+l+s+l] = "я";
+
+
+    ru_decode[s+d+l+d+l+d+l+d+l] = "1";
+    ru_decode[s+d+s+d+l+d+l+d+l] = "2";
+    ru_decode[s+d+s+d+s+d+l+d+l] = "3";
+    ru_decode[s+d+s+d+s+d+s+d+l] = "4";
+    ru_decode[s+d+s+d+s+d+s+d+s] = "5";
+    ru_decode[l+d+s+d+s+d+s+d+s] = "6";
+    ru_decode[l+d+l+d+s+d+s+d+s] = "7";
+    ru_decode[l+d+l+d+l+d+s+d+s] = "8";
+    ru_decode[l+d+l+d+l+d+l+d+s] = "9";
+    ru_decode[l+d+l+d+l+d+l+d+l] = "0";
+
+    ru_decode[s+d+l+d+s+d+l+d+s+d+l] = ".";
+    ru_decode[l+d+l+d+s+d+s+d+l+d+l] = ",";
+    ru_decode[s+d+s+d+l+d+l+d+s+d+s] = "?";
+    ru_decode[l+d+s+d+s+d+s+d+s+d+l] = "—";
+    ru_decode[l+d+l+d+l+d+s+d+s+d+s] = ":";
+    ru_decode[l+d+s+d+l+d+s+d+l+d+s] = ";";
+    ru_decode[l+d+s+d+l+d+s+d+l+d+l] = "!";
+    ru_decode[s+d+l+d+l+d+l+d+l+d+s] = "'";
+    ru_decode[s+d+l+d+s+d+s+d+l+d+s] = QString{'"'};
+    ru_decode[l+d+s+d+l+d+l+d+s] = "(";
+    ru_decode[l+d+s+d+l+d+l+d+s+d+l] = ")";
+    ru_decode[s+d+l+d+s+d+s+d+s] = "&";
+    ru_decode[l+d+s+d+s+d+l+d+s] = "/";
+    ru_decode[s+d+s+d+l+d+l+d+s+d+l] = "_";
+    ru_decode[l+d+s+d+s+d+s+d+l] = "=";
+    ru_decode[s+d+l+d+s+d+l+d+s] = "+";
+    ru_decode[l+d+s+d+s+d+s+d+s+d+l] = "-";
+    ru_decode[s+d+s+d+s+d+l+d+s+d+s+d+l] = "$";
+    ru_decode[s+d+l+d+l+d+s+d+l+d+s] = "@";
+
+
 }
 
 QString Encript_from_en(QString& originalText, Dictionary dict){
-    originalText.toLower();
+    originalText = originalText.toLower();
     QString encodered_text = "";
     int index = 0;
     for(auto symbol : originalText){
@@ -162,7 +230,7 @@ QString Decript_to_en(QString& encriptedText, Dictionary dict){
 
     for(int i = 0; i < size; ++i){
         QString sign = encriptedText[i];
-        std::cout<<"i:"<<std::endl;
+        std::cout<<"i:"<<i<<std::endl;
         if (sign != dict.delimetr_){
             symbol+=sign;
             if (i == size - 1){
