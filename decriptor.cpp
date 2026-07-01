@@ -36,8 +36,12 @@ void Decriptor::on_FromTXT_clicked()
 
 void Decriptor::on_DecripteButton_clicked()
 {
-    decriptedText = morze::Decript_to_en(encriptedText, main_window->getDictionary());
-    ui->DecriptedText->setText(decriptedText);
+    try{
+        decriptedText = morze::Decript_to_en(encriptedText, main_window->getDictionary());
+        ui->DecriptedText->setText(decriptedText);
+    }catch(QString massenge){
+        ui->DecriptedText->setText(massenge);
+    }
 }
 
 void Decriptor::on_SaveResultTXT_clicked()

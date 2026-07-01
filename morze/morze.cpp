@@ -1,6 +1,7 @@
 #include<memory>
 #include<fstream>
 #include"morze.hpp"
+#include <iostream>
 
 namespace morze{
 
@@ -59,7 +60,7 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
     international_code[";"] = l+d+s+d+l+d+s+d+l+d+s;
     international_code["!"] = l+d+s+d+l+d+s+d+l+d+l;
     international_code["'"] = s+d+l+d+l+d+l+d+l+d+s;
-    international_code[QString::fromStdString(std::to_string('"'))] = s+d+l+d+s+d+s+d+l+d+s;
+    international_code[QString{'"'}] = s+d+l+d+s+d+s+d+l+d+s;
     international_code["("] = l+d+s+d+l+d+l+d+s;
     international_code[")"] = l+d+s+d+l+d+l+d+s+d+l;
     international_code["&"] = s+d+l+d+s+d+s+d+s;
@@ -118,7 +119,7 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
     international_decode[l+d+s+d+l+d+s+d+l+d+s] = ";";
     international_decode[l+d+s+d+l+d+s+d+l+d+l] = "!";
     international_decode[s+d+l+d+l+d+l+d+l+d+s] = "'";
-    international_decode[s+d+l+d+s+d+s+d+l+d+s] = QString::fromStdString(std::to_string('"'));
+    international_decode[s+d+l+d+s+d+s+d+l+d+s] = QString{'"'};
     international_decode[l+d+s+d+l+d+l+d+s] = "(";
     international_decode[l+d+s+d+l+d+l+d+s+d+l] = ")";
     international_decode[s+d+l+d+s+d+s+d+s] = "&";
@@ -133,7 +134,7 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
 }
 
 QString Encript_from_en(QString& originalText, Dictionary dict){
-
+    originalText.toLower();
     QString encodered_text = "";
     int index = 0;
     for(auto symbol : originalText){
@@ -158,27 +159,70 @@ QString Decript_to_en(QString& encriptedText, Dictionary dict){
     QString symbol = "";
     QString word = "";
     int size = encriptedText.size();
+
     for(int i = 0; i < size; ++i){
         QString sign = encriptedText[i];
+        std::cout<<"i:"<<std::endl;
         if (sign != dict.delimetr_){
             symbol+=sign;
             if (i == size - 1){
-               decripted_text += dict.international_decode[symbol];
+                word += dict.international_decode[symbol];
+                decripted_text += word;
             }
         }
-        if (sign == dict.delimetr_ && i+1 < size && encriptedText[i+1] != dict.delimetr_){
-                symbol+=sign;
+        if (sign == dict.delimetr_){
+            if(size != i+1){
+                if (encriptedText[i+1] != dict.delimetr_){
+                    symbol+=sign;
+                }else{
+                    int count = 0;
+                    if(size > i+6){
+                        for(int j = i; j < i+6; ++j){
+                            if (encriptedText[j] == dict.delimetr_){
+                                ++count;
+                                std::cout<<"1:"<<count<<std::endl;
+                            }else{break;}
+                        }
+                        if (count == 3){
+                            word+=dict.international_decode[symbol];
+                            symbol = "";
+                            i += 2;
+                        }
+                        if (count == 6){
+                            word+=dict.international_decode[symbol];
+                            decripted_text+=word+" ";
+                            symbol ="";
+                            word="";
+                            i += 6;
+                        }
+                        if (count!=3 && count !=6){
+                            throw QString{"Не удалось расшифровать"};
+                        }
+                    }
+                    if (size < i + 6 && size > i + 2){
+                        for(int j = i; j < i+2; ++j){
+                            if (encriptedText[j] == dict.delimetr_){
+                                ++count;
+                                std::cout<<"2:"<<count<<std::endl;
+                            }else{break;}
+                        }
+                        if (count == 2){
+                            word+=dict.international_decode[symbol];
+                            symbol = "";
+                            i += 2;
+                        }
+                        if (count!=2){
+                            throw QString{"Не удалось расшифровать"};
+                        }
+                    }
+
+                }
+            }else{throw QString{"Не удалось расшифровать"};}
         }
-        if (sign == dict.delimetr_ && i+3 < size && encriptedText[i+3] != dict.delimetr_){
-                word+=dict.international_decode[symbol];
-                symbol = "";
-                i+=2;
-        }
-        if (sign == dict.delimetr_ && i+6 < size && encriptedText[i+6] != dict.delimetr_){
-                decripted_text+=word + " ";
-                word = "";
-                i+=5;
-        }
+        std::cout<<"symbol:"<<symbol.toStdString()<<std::endl;
+        std::cout<<"word:"<<word.toStdString()<<std::endl;
+        std::cout<<"text:"<<decripted_text.toStdString()<<std::endl;
+
     }
     return decripted_text;
 }

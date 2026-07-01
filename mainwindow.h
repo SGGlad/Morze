@@ -7,6 +7,7 @@
 #include <QFileDialog>
 #include "morze/morze.hpp"
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
