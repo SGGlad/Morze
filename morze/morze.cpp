@@ -14,8 +14,8 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
     delimetr_ = delimetr;
     auto d = delimetr;
     // fill the international dictionary's variant (TO morze code)
-    international_code["a"] = s+d+l;
-    international_code["b"] = l+d+s+d+s+d+s;
+    international_code["a"] = s+l;
+    international_code["b"] = l+s+d+s+d+s;
     international_code["c"] = l+d+s+d+l+d+s;
     international_code["d"] = l+d+s+d+s;
     international_code["e"] = s;
@@ -133,38 +133,38 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
     // make for russian
     //fill the russian ddictionary's variant (FROM morze code)
     ru_decode[s+d+l] = "а";
-    ru_decode[l+d+s+s+s] = "б";
-    ru_decode[s+l+l] = "в";
-    ru_decode[l+l+s] = "г";
-    ru_decode[l+s+s] = "д";
+    ru_decode[l+d+s+d+s+d+s] = "б";
+    ru_decode[s+d+l+d+l] = "в";
+    ru_decode[l+d+l+d+s] = "г";
+    ru_decode[l+d+s+d+s] = "д";
     ru_decode[s] = "е";
     ru_decode[s] = "ё";
-    ru_decode[s+s+s+l] = "ж";
-    ru_decode[l+l+s+s] = "з";
-    ru_decode[s+s] = "и";
-    ru_decode[s+l+l+l] = "й";
-    ru_decode[l+s+l] = "к";
-    ru_decode[s+l+s+s] = "л";
-    ru_decode[l+l] = "м";
-    ru_decode[l+s] = "н";
-    ru_decode[l+l+l] = "о";
-    ru_decode[s+l+l+s] = "п";
-    ru_decode[s+l+s] = "р";
-    ru_decode[s+l+s] = "с";
+    ru_decode[s+d+s+d+s+d+l] = "ж";
+    ru_decode[l+d+l+d+s+d+s] = "з";
+    ru_decode[s+d+s] = "и";
+    ru_decode[s+d+l+d+l+d+l] = "й";
+    ru_decode[l+d+s+d+l] = "к";
+    ru_decode[s+d+l+d+s+d+s] = "л";
+    ru_decode[l+d+l] = "м";
+    ru_decode[l+d+s] = "н";
+    ru_decode[l+d+l+d+l] = "о";
+    ru_decode[s+d+l+d+l+d+s] = "п";
+    ru_decode[s+d+l+d+s] = "р";
+    ru_decode[s+d+l+d+s] = "с";
     ru_decode[l] = "т";
-    ru_decode[s+s+l] = "у";
-    ru_decode[s+s+l+s] = "ф";
-    ru_decode[s+s+s+s] = "х";
-    ru_decode[l+s+l+s] = "ц";
-    ru_decode[l+l+l+s] = "ч";
-    ru_decode[l+l+l+l] = "ш";
-    ru_decode[l+l+s+l] = "щ";
-    ru_decode[l+l+s+s+l+s] = "ъ";
-    ru_decode[l+s+l+l] = "ы";
-    ru_decode[l+s+s+l] = "ь";
-    ru_decode[s+s+l+s+s] = "э";
-    ru_decode[s+s+l+l] = "ю";
-    ru_decode[s+l+s+l] = "я";
+    ru_decode[s+d+s+d+l] = "у";
+    ru_decode[s+d+s+d+l+d+s] = "ф";
+    ru_decode[s+d+s+d+s+d+s] = "х";
+    ru_decode[l+d+s+d+l+d+s] = "ц";
+    ru_decode[l+d+l+d+l+d+s] = "ч";
+    ru_decode[l+d+l+d+l+d+l] = "ш";
+    ru_decode[l+d+l+d+s+d+l] = "щ";
+    ru_decode[l+d+l+d+s+d+s+d+l+d+s] = "ъ";
+    ru_decode[l+d+s+d+l+d+l] = "ы";
+    ru_decode[l+d+s+d+s+d+l] = "ь";
+    ru_decode[s+d+s+d+l+d+s+d+s] = "э";
+    ru_decode[s+d+s+d+l+d+l] = "ю";
+    ru_decode[s+d+l+d+s+d+l] = "я";
 
 
     ru_decode[s+d+l+d+l+d+l+d+l] = "1";
@@ -198,100 +198,245 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
     ru_decode[s+d+s+d+s+d+l+d+s+d+s+d+l] = "$";
     ru_decode[s+d+l+d+l+d+s+d+l+d+s] = "@";
 
+    //russian TO moerze
+    ru_code["а"] = s+d+l;
+    ru_code["б"] = l+d+s+d+s+d+s;
+    ru_code["в"] = s+d+l+d+l;
+    ru_code["г"] = l+d+l+d+s;
+    ru_code["д"] = l+d+s+d+s;
+    ru_code["е"] = s;
+    ru_code["ё"] = s;
+    ru_code["ж"] = s+d+s+d+s+d+l;
+    ru_code["з"] = l+d+l+d+s+d+s;
+    ru_code["и"] = s+d+s;
+    ru_code["й"] = s+d+l+d+l+d+l;
+    ru_code["к"] = l+d+s+d+l;
+    ru_code["л"] = s+d+l+d+s+d+s;
+    ru_code["м"] = l+d+l;
+    ru_code["н"] = l+d+s;
+    ru_code["о"] = l+d+l+d+l;
+    ru_code["п"] = s+d+l+d+l+d+s;
+    ru_code["р"] = s+d+l+d+s;
+    ru_code["с"] = s+d+l+d+s;
+    ru_code["т"] = l;
+    ru_code["у"] = s+d+s+d+l;
+    ru_code["ф"] = s+d+s+d+l+d+s;
+    ru_code["х"] = s+d+s+d+s+d+s;
+    ru_code["ц"] = l+d+s+d+l+d+s;
+    ru_code["ч"] = l+d+l+d+l+d+s;
+    ru_code["ш"] = l+d+l+d+l+d+l;
+    ru_code["щ"] = l+d+l+d+s+d+l;
+    ru_code["ъ"] = l+d+l+d+s+d+s+d+l+d+s;
+    ru_code["ы"] = l+d+s+d+l+d+l;
+    ru_code["ь"] = l+d+s+d+s+d+l;
+    ru_code["э"] = s+d+s+d+l+d+s+d+s;
+    ru_code["ю"] = s+d+s+d+l+d+l;
+    ru_code["я"] = s+d+l+d+s+d+l;
+
+    ru_code["1"] = s+d+l+d+l+d+l+d+l;
+    ru_code["2"] = s+d+s+d+l+d+l+d+l;
+    ru_code["3"] = s+d+s+d+s+d+l+d+l;
+    ru_code["4"] = s+d+s+d+s+d+s+d+l;
+    ru_code["5"] = s+d+s+d+s+d+s+d+s;
+    ru_code["6"] = l+d+s+d+s+d+s+d+s;
+    ru_code["7"] = l+d+l+d+s+d+s+d+s;
+    ru_code["8"] = l+d+l+d+l+d+s+d+s;
+    ru_code["9"] = l+d+l+d+l+d+l+d+s;
+    ru_code["0"] = l+d+l+d+l+d+l+d+l;
+
+    ru_code["."] = s+d+l+d+s+d+l+d+s+d+l;
+    ru_code[","] = l+d+l+d+s+d+s+d+l+d+l;
+    ru_code["?"] = s+d+s+d+l+d+l+d+s+d+s;
+    ru_code["—"] = l+d+s+d+s+d+s+d+s+d+l;
+    ru_code[":"] = l+d+l+d+l+d+s+d+s+d+s;
+    ru_code[";"] = l+d+s+d+l+d+s+d+l+d+s;
+    ru_code["!"] = l+d+s+d+l+d+s+d+l+d+l;
+    ru_code["'"] = s+d+l+d+l+d+l+d+l+d+s;
+    ru_code[QString{'"'}] = s+d+l+d+s+d+s+d+l+d+s;
+    ru_code["("] = l+d+s+d+l+d+l+d+s;
+    ru_code[")"] = l+d+s+d+l+d+l+d+s+d+l;
+    ru_code["&"] = s+d+l+d+s+d+s+d+s;
+    ru_code["/"] = l+d+s+d+s+d+l+d+s;
+    ru_code["_"] = s+d+s+d+l+d+l+d+s+d+l;
+    ru_code["="] = l+d+s+d+s+d+s+d+l;
+    ru_code["+"] = s+d+l+d+s+d+l+d+s;
+    ru_code["-"] = l+d+s+d+s+d+s+d+s+d+l;
+    ru_code["$"] = s+d+s+d+s+d+l+d+s+d+s+d+l;
+    ru_code["@"] = s+d+l+d+l+d+s+d+l+d+s;
+
 
 }
 
-QString Encript_from_en(QString& originalText, Dictionary dict){
+QString Encript(QString& originalText, Dictionary dict, Mode mode){
     originalText = originalText.toLower();
     QString encodered_text = "";
     int index = 0;
-    for(auto symbol : originalText){
-        if (symbol != " " && (index+1 == originalText.size() || originalText[index+1] == " ")){
-            encodered_text += dict.international_code.at(symbol);
-        }else{
-            if(symbol != " "){
-                encodered_text += dict.international_code.at(symbol)+dict.delimetr_+dict.delimetr_+dict.delimetr_;
+    if (mode == Mode::EN){
+        for(auto symbol : originalText){
+            if (symbol != " " && (index+1 == originalText.size() || originalText[index+1] == " ")){
+                encodered_text += dict.international_code.at(symbol);
             }else{
-                for (int i = 0; i < 7; ++i){
-                    encodered_text+=dict.delimetr_;
+                if(symbol != " "){
+                    encodered_text += dict.international_code.at(symbol)+dict.delimetr_+dict.delimetr_+dict.delimetr_;
+                }else{
+                    for (int i = 0; i < 7; ++i){
+                        encodered_text+=dict.delimetr_;
+                    }
                 }
             }
+            ++index;
         }
-        ++index;
+    }
+    if (mode == Mode::RU){
+        for(auto symbol : originalText){
+            if (symbol != " " && (index+1 == originalText.size() || originalText[index+1] == " ")){
+                encodered_text += dict.ru_code.at(symbol);
+            }else{
+                if(symbol != " "){
+                    encodered_text += dict.ru_code.at(symbol)+dict.delimetr_+dict.delimetr_+dict.delimetr_;
+                }else{
+                    for (int i = 0; i < 7; ++i){
+                        encodered_text+=dict.delimetr_;
+                    }
+                }
+            }
+            ++index;
+        }
     }
     return encodered_text;
 }
 
-QString Decript_to_en(QString& encriptedText, Dictionary dict){
+QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
     QString decripted_text = "";
     QString symbol = "";
     QString word = "";
     int size = encriptedText.size();
+    if (mode == Mode::EN){
+        for(int i = 0; i < size; ++i){
+            QString sign = encriptedText[i];
+            std::cout<<"i:"<<i<<std::endl;
+            if (sign != dict.delimetr_){
+                symbol+=sign;
+                if (i == size - 1){
+                    word += dict.international_decode[symbol];
+                    decripted_text += word;
+                }
+            }
+            if (sign == dict.delimetr_){
+                if(size != i+1){
+                    if (encriptedText[i+1] != dict.delimetr_){
+                        symbol+=sign;
+                    }else{
+                        int count = 0;
+                        if(size > i+6){
+                            for(int j = i; j < i+6; ++j){
+                                if (encriptedText[j] == dict.delimetr_){
+                                    ++count;
+                                    std::cout<<"1:"<<count<<std::endl;
+                                }else{break;}
+                            }
+                            if (count == 3){
+                                word+=dict.international_decode[symbol];
+                                symbol = "";
+                                i += 2;
+                            }
+                            if (count == 6){
+                                word+=dict.international_decode[symbol];
+                                decripted_text+=word+" ";
+                                symbol ="";
+                                word="";
+                                i += 6;
+                            }
+                            if (count!=3 && count !=6){
+                                throw QString{"Не удалось расшифровать"};
+                            }
+                        }
+                        if (size < i + 6 && size > i + 2){
+                            for(int j = i; j < i+2; ++j){
+                                if (encriptedText[j] == dict.delimetr_){
+                                    ++count;
+                                    std::cout<<"2:"<<count<<std::endl;
+                                }else{break;}
+                            }
+                            if (count == 2){
+                                word+=dict.international_decode[symbol];
+                                symbol = "";
+                                i += 2;
+                            }
+                            if (count!=2){
+                                throw QString{"Не удалось расшифровать"};
+                            }
+                        }
 
-    for(int i = 0; i < size; ++i){
-        QString sign = encriptedText[i];
-        std::cout<<"i:"<<i<<std::endl;
-        if (sign != dict.delimetr_){
-            symbol+=sign;
-            if (i == size - 1){
-                word += dict.international_decode[symbol];
-                decripted_text += word;
+                    }
+                }else{throw QString{"Не удалось расшифровать"};}
             }
         }
-        if (sign == dict.delimetr_){
-            if(size != i+1){
-                if (encriptedText[i+1] != dict.delimetr_){
-                    symbol+=sign;
-                }else{
-                    int count = 0;
-                    if(size > i+6){
-                        for(int j = i; j < i+6; ++j){
-                            if (encriptedText[j] == dict.delimetr_){
-                                ++count;
-                                std::cout<<"1:"<<count<<std::endl;
-                            }else{break;}
-                        }
-                        if (count == 3){
-                            word+=dict.international_decode[symbol];
-                            symbol = "";
-                            i += 2;
-                        }
-                        if (count == 6){
-                            word+=dict.international_decode[symbol];
-                            decripted_text+=word+" ";
-                            symbol ="";
-                            word="";
-                            i += 6;
-                        }
-                        if (count!=3 && count !=6){
-                            throw QString{"Не удалось расшифровать"};
-                        }
-                    }
-                    if (size < i + 6 && size > i + 2){
-                        for(int j = i; j < i+2; ++j){
-                            if (encriptedText[j] == dict.delimetr_){
-                                ++count;
-                                std::cout<<"2:"<<count<<std::endl;
-                            }else{break;}
-                        }
-                        if (count == 2){
-                            word+=dict.international_decode[symbol];
-                            symbol = "";
-                            i += 2;
-                        }
-                        if (count!=2){
-                            throw QString{"Не удалось расшифровать"};
-                        }
-                    }
-
+    }
+    if (mode == Mode::RU){
+        for(int i = 0; i < size; ++i){
+            QString sign = encriptedText[i];
+            std::cout<<"i:"<<i<<std::endl;
+            if (sign != dict.delimetr_){
+                symbol+=sign;
+                if (i == size - 1){
+                    word += dict.ru_decode[symbol];
+                    decripted_text += word;
                 }
-            }else{throw QString{"Не удалось расшифровать"};}
+            }
+            if (sign == dict.delimetr_){
+                if(size != i+1){
+                    if (encriptedText[i+1] != dict.delimetr_){
+                        symbol+=sign;
+                    }else{
+                        int count = 0;
+                        if(size > i+6){
+                            for(int j = i; j < i+6; ++j){
+                                if (encriptedText[j] == dict.delimetr_){
+                                    ++count;
+                                    std::cout<<"1:"<<count<<std::endl;
+                                }else{break;}
+                            }
+                            if (count == 3){
+                                word+=dict.ru_decode.at(symbol);
+                                symbol = "";
+                                i += 2;
+                            }
+                            if (count == 6){
+                                word+=dict.ru_decode.at(symbol);
+                                decripted_text+=word+" ";
+                                symbol ="";
+                                word="";
+                                i += 6;
+                            }
+                            if (count!=3 && count !=6){
+                                throw QString{"Не удалось расшифровать"};
+                            }
+                        }
+                            if (size < i + 6 && size > i + 2){
+                            for(int j = i; j < i+2; ++j){
+                                if (encriptedText[j] == dict.delimetr_){
+                                    ++count;
+                                    std::cout<<"2:"<<count<<std::endl;
+                                }else{break;}
+                            }
+                            if (count == 2){
+                                word+=dict.ru_decode.at(symbol);
+                                symbol = "";
+                                i += 2;
+                            }
+                            if (count!=2){
+                                throw QString{"Не удалось расшифровать"};
+                            }
+                        }
+                    }
+                }else{throw QString{"Не удалось расшифровать"};}
+            }
         }
+    }
         std::cout<<"symbol:"<<symbol.toStdString()<<std::endl;
         std::cout<<"word:"<<word.toStdString()<<std::endl;
         std::cout<<"text:"<<decripted_text.toStdString()<<std::endl;
-
-    }
     return decripted_text;
 }
 }

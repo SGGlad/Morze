@@ -44,7 +44,7 @@ void Encriptor::on_FromTXT_clicked()
 void Encriptor::on_EncodeButton_clicked()
 {
     try{
-    encoderedText = morze::Encript_from_en(originalText, main_window->getDictionary());
+    encoderedText = morze::Encript(originalText, main_window->getDictionary(), mode);
     ui->EncoderedText->setPlainText(encoderedText);
     }catch(...){
         ui->EncoderedText->setText("Не удалось зашифровать");
@@ -63,5 +63,16 @@ void Encriptor::on_SaveResultTXT_clicked()
             file.close();
         }
     }catch(...){}
+}
+
+
+void Encriptor::on_SetMode_activated(int index)
+{
+    if(index == 0){
+        mode = morze::Mode::EN;
+    }
+    if(index == 1){
+        mode = morze::Mode::RU;
+    }
 }
 

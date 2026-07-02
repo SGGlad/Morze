@@ -28,13 +28,14 @@ private slots:
 
     void on_SaveResultTXT_clicked();
 
+    void on_SetMode_activated(int index);
+
 private:
     Ui::Encriptor *ui;
     MainWindow* main_window;
     QString originalText;
     QString encoderedText;
-
-
+    morze::Mode mode = morze::Mode::EN;
 };
 
 #endif // ENCRIPTOR_H

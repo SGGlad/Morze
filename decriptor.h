@@ -23,10 +23,13 @@ private slots:
     void on_Cancel_clicked();
     void on_Note_clicked(bool checked);
 
+    void on_SetMode_activated(int index);
+
 private:
     Ui::Decriptor *ui;
     QString encriptedText = "";
     QString decriptedText = "";
+    morze::Mode mode = morze::Mode::EN;
     MainWindow* main_window;
 
 

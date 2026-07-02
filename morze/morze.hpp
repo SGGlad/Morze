@@ -3,6 +3,12 @@
 #include<map>
 
 namespace  morze{
+enum class Mode{
+    EN = 1,
+    RU = 2
+
+};
+
 struct Dictionary{
     Dictionary(QString& long_symbol, QString& short_symbol, QString& delimetr);
     Dictionary() = default;
@@ -15,6 +21,6 @@ struct Dictionary{
 };
 
 
-QString Encript_from_en(QString& originaltext, Dictionary dict);
-QString Decript_to_en(QString& encriptedText, Dictionary dict);
+QString Encript(QString& originaltext, Dictionary dict, Mode mode);
+QString Decript(QString& encriptedText, Dictionary dict, Mode mode);
 }

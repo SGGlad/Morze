@@ -37,7 +37,7 @@ void Decriptor::on_FromTXT_clicked()
 void Decriptor::on_DecripteButton_clicked()
 {
     try{
-        decriptedText = morze::Decript_to_en(encriptedText, main_window->getDictionary());
+        decriptedText = morze::Decript(encriptedText, main_window->getDictionary(), mode);
         ui->DecriptedText->setText(decriptedText);
     }catch(QString massenge){
         ui->DecriptedText->setText(massenge);
@@ -71,3 +71,14 @@ void Decriptor::on_Note_clicked(bool checked)
         ui->NoteText->setText("");
     }
 }
+
+void Decriptor::on_SetMode_activated(int index)
+{
+    if (index == 0){
+        mode = morze::Mode::EN;
+    }
+    if (index == 1){
+        mode = morze::Mode::RU;
+    }
+}
+
