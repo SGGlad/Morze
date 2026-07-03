@@ -39,8 +39,8 @@ void Decriptor::on_DecripteButton_clicked()
     try{
         decriptedText = morze::Decript(encriptedText, main_window->getDictionary(), mode);
         ui->DecriptedText->setText(decriptedText);
-    }catch(QString massenge){
-        ui->DecriptedText->setText(massenge);
+    }catch(...){
+        ui->DecriptedText->setText("Не удалось дешифровать");
     }
 }
 

@@ -1,11 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#define MINIAUDIO_IMPLEMENTATION
 #include <iostream>
 #include <fstream>
 #include <QMainWindow>
 #include <QFile>
 #include <QFileDialog>
 #include "morze/morze.hpp"
+#include <SFML/Audio.hpp>
+#include <QTimer>
+
 
 
 QT_BEGIN_NAMESPACE
@@ -48,9 +52,9 @@ private:
     QString shortSymbol_ = ".";
     QString longSymbol_ = "-";
     QString delimetr_ = "/";
-    QString shortSound_ = "short.wav";
-    QString longSound_ = "long.wav";
-    QString delimetrSound_ = "pause.wav";
+    QString shortSound_ = "../../Sounds/short.wav";
+    QString longSound_ = "../../Sounds/long.wav";
+    QString delimetrSound_ = "../../Sounds/pause.wav";
     morze::Dictionary dict;
 
 

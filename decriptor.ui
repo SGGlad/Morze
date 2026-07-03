@@ -16,9 +16,9 @@
   <widget class="QPushButton" name="SaveResultTXT">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>210</x>
      <y>440</y>
-     <width>111</width>
+     <width>181</width>
      <height>41</height>
     </rect>
    </property>
@@ -39,19 +39,6 @@
     <string>Назад</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="PlaySound">
-   <property name="geometry">
-    <rect>
-     <x>570</x>
-     <y>400</y>
-     <width>41</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QTextEdit" name="DecriptedText">
    <property name="geometry">
     <rect>
@@ -65,19 +52,6 @@
     <font>
      <pointsize>14</pointsize>
     </font>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="SaveResultWAV">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>440</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Сохранить в .wav</string>
    </property>
   </widget>
   <widget class="QLabel" name="NoteText">

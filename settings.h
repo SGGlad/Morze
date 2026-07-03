@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "mainwindow.h"
 
+
 namespace Ui {
 class Settings;
 }
@@ -36,9 +37,11 @@ private:
     QString settingShortSymbol_ = ".";
     QString settingLongSymbol_ = "-";
     QString settingDelimetr_ = "/";
-    QString settingShortSound_ = "short.wav";
-    QString settingLongSound_ = "long.wav";
-    QString settingDelimetrSound_ = "pause.wav";
+    QString settingShortSound_ = "../../Sounds/short.wav";
+    QString settingLongSound_ = "../../Sounds/long.wav";
+    QString settingDelimetrSound_ = "../../Sounds/pause.wav";
+    QTimer* timer = nullptr;
+
 
 };
 

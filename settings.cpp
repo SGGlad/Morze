@@ -1,6 +1,6 @@
 #include "settings.h"
 #include "ui_settings.h"
-
+#include "miniaudio/miniaudio.h"
 
 Settings::Settings(MainWindow* main, QWidget *parent)
     : QDialog(parent)
@@ -11,6 +11,9 @@ Settings::Settings(MainWindow* main, QWidget *parent)
     ui->ShortSymbol->setText(main_window->getShortSymbol());
     ui->LongSymbol->setText(main_window->getLongSymbol());
     ui->Delimetr->setText(main_window->getDelimetr());
+    ui->ShortSound->setCheckable(true);
+    ui->LongSound_2->setCheckable(true);
+    ui->DelimetrSound->setCheckable(true);
 }
 
 Settings::~Settings()
@@ -21,12 +24,17 @@ Settings::~Settings()
 void Settings::on_ShortSymbol_textEdited(const QString &symbol)
 {
     if (symbol != ""){
-        if (symbol != settingLongSymbol_ && symbol != settingDelimetr_){
-            settingShortSymbol_ = symbol;
-            ui->ShortSymbolTextError->setText("");
-            ui->ApplyButton->setEnabled(true);
+        if (symbol != " "){
+            if (symbol != settingLongSymbol_ && symbol != settingDelimetr_){
+                settingShortSymbol_ = symbol;
+                ui->ShortSymbolTextError->setText("");
+                ui->ApplyButton->setEnabled(true);
+            }else{
+                ui->ShortSymbolTextError->setText("Символ уже используется");
+                ui->ApplyButton->setEnabled(false);
+            }
         }else{
-            ui->ShortSymbolTextError->setText("Символ уже используется");
+            ui->ShortSymbolTextError->setText("Невозможно использовать");
             ui->ApplyButton->setEnabled(false);
         }
     }else{
@@ -37,12 +45,17 @@ void Settings::on_ShortSymbol_textEdited(const QString &symbol)
 void Settings::on_LongSymbol_textEdited(const QString &symbol)
 {
     if (symbol != ""){
-        if (symbol != settingShortSymbol_ && symbol!=settingDelimetr_){
-            settingLongSymbol_ = symbol;
-            ui->LongSymbolTextError->setText("");
-            ui->ApplyButton->setEnabled(true);
+        if (symbol != " "){
+            if (symbol != settingShortSymbol_ && symbol!=settingDelimetr_){
+                settingLongSymbol_ = symbol;
+                ui->LongSymbolTextError->setText("");
+                ui->ApplyButton->setEnabled(true);
+            }else{
+                ui->LongSymbolTextError->setText("Символ уже используется");
+                ui->ApplyButton->setEnabled(false);
+            }
         }else{
-            ui->LongSymbolTextError->setText("Символ уже используется");
+            ui->LongSymbolTextError->setText("Невозможно использовать");
             ui->ApplyButton->setEnabled(false);
         }
     }else{
@@ -53,12 +66,17 @@ void Settings::on_LongSymbol_textEdited(const QString &symbol)
 void Settings::on_Delimetr_textEdited(const QString &symbol)
 {
     if (symbol != ""){
-        if (symbol != settingLongSymbol_ && symbol != settingShortSymbol_){
-            settingDelimetr_ = symbol;
-            ui->DelimetrSymbolTextError->setText("");
-            ui->ApplyButton->setEnabled(true);
+        if(symbol != " "){
+            if (symbol != settingLongSymbol_ && symbol != settingShortSymbol_){
+                settingDelimetr_ = symbol;
+                ui->DelimetrSymbolTextError->setText("");
+                ui->ApplyButton->setEnabled(true);
+            }else{
+                ui->DelimetrSymbolTextError->setText("Символ уже используется");
+                ui->ApplyButton->setEnabled(false);
+            }
         }else{
-            ui->DelimetrSymbolTextError->setText("Символ уже используется");
+            ui->DelimetrSymbolTextError->setText("Невозможно использовать");
             ui->ApplyButton->setEnabled(false);
         }
     }else{
@@ -106,15 +124,56 @@ void Settings::on_SetDelimetrSound_clicked()
 
 void Settings::on_ShortSound_clicked(bool checked)
 {
-    //play sound
+    try{
+        ma_engine engine;
+        ma_result result = ma_engine_init(NULL, &engine);
+        if(result != MA_SUCCESS){
+            ui->ShortSoundError->setText("Не удалось воспроизвести");
+        }else{
+            ui->ShortSoundError->setText("");
+            ma_engine_play_sound(&engine, qPrintable(settingShortSound_), NULL);
+        }
+
+    }catch(...){ui->ShortSoundError->setText("Не удалось воспроизвести");}
 }
 void Settings::on_LongSound_2_clicked(bool checked)
 {
-    //play sound
+    try{
+        ui->LongSoundError->setText("");
+       ma_engine engine;
+        ma_engine_init(NULL, &engine);
+        ma_sound sound;
+        if (ma_sound_init_from_file(&engine, qPrintable(settingLongSound_), MA_SOUND_FLAG_DECODE, NULL, NULL, &sound) == MA_SUCCESS){
+            ma_sound_start(&sound);
+            timer = new QTimer(this);
+            connect(timer, &QTimer::timeout, this, [this, sound]() {
+                if (!ma_sound_is_playing(&sound)) {
+                    timer->stop();
+                    deleteLater();
+                }
+            });
+            timer->start(100);
+            if(!timer->isActive()){
+                ma_sound_uninit(&sound);
+                ma_engine_uninit(&engine);
+            }
+        }
+
+    }catch(...){ui->LongSoundError->setText("Не удалось воспроизвести");}
 }
 void Settings::on_DelimetrSound_clicked(bool checked)
 {
-    //play sound
+    try{
+        ma_engine engine;
+        ma_result result = ma_engine_init(NULL, &engine);
+        if(result != MA_SUCCESS){
+             ui->DelimrtrSoundError->setText("Не удалось воспроизвести");
+        }else{
+            ui->DelimrtrSoundError->setText("");
+            ma_engine_play_sound(&engine, qPrintable(settingDelimetrSound_), NULL);
+        }
+
+    }catch(...){ui->DelimrtrSoundError->setText("Не удалось воспроизвести");}
 }
 
 void Settings::on_ApplyButton_clicked()

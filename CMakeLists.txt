@@ -19,16 +19,23 @@ set(PROJECT_SOURCES
         mainwindow.ui
         morze/morze.cpp
         morze/morze.hpp
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Morze
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-
         settings.h settings.cpp settings.ui
         encriptor.h encriptor.cpp encriptor.ui
         decriptor.h decriptor.cpp decriptor.ui
+        Sounds/long.wav
+        Sounds/pause.wav
+        Sounds/short.wav
+        miniaudio/miniaudio.cpp miniaudio/miniaudio.h
+
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Morze APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -47,8 +54,13 @@ else()
         )
     endif()
 endif()
+set(SFML_STATIC_LIBRARIES ON)
+set(CMAKE_PREFIX_PATH C:/SFML/SFML-3.1.0/lib/cmake/SFML)
+
+find_package(SFML 3 COMPONENTS Audio REQUIRED)
 
 target_link_libraries(Morze PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Morze PRIVATE SFML::Audio)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
