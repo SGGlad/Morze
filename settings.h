@@ -2,6 +2,7 @@
 #define SETTINGS_H
 
 #include <QDialog>
+#include <QSoundEffect>
 #include "mainwindow.h"
 
 
@@ -21,14 +22,17 @@ private slots:
     void on_ShortSymbol_textEdited(const QString &symbol);
     void on_LongSymbol_textEdited(const QString &symbol);
     void on_Delimetr_textEdited(const QString &symbol);
+    void on_DelimetrChar_textEdited(const QString &symbol);
     void on_SetShortSound_clicked();
     void on_SetLongSound_clicked();
     void on_SetDelimetrSound_clicked();
-    void on_ShortSound_clicked(bool checked);
-    void on_LongSound_2_clicked(bool checked);
-    void on_DelimetrSound_clicked(bool checked);
+    void on_ShortSound_clicked();
+    void on_LongSound_2_clicked();
+    void on_DelimetrSound_clicked();
     void on_ApplyButton_clicked();
     void on_CancelButton_clicked();
+    void on_SetDelimetrCharSound_clicked();
+    void on_DelimetrCharSound_clicked();
 
 private:
 
@@ -37,11 +41,15 @@ private:
     QString settingShortSymbol_ = ".";
     QString settingLongSymbol_ = "-";
     QString settingDelimetr_ = "/";
-    QString settingShortSound_ = "../../Sounds/short.wav";
-    QString settingLongSound_ = "../../Sounds/long.wav";
-    QString settingDelimetrSound_ = "../../Sounds/pause.wav";
-    QTimer* timer = nullptr;
-
+    QString settingDelimetrChar_ = " ";
+    QString settingDelimetrCharSound_ = "Sourse/Sounds/pause.wav";
+    QString settingShortSound_ = "Sourse/Sounds/short.wav";
+    QString settingLongSound_ = "Sourse/Sounds/long.wav";
+    QString settingDelimetrSound_ = "Sourse/Sounds/pause_btw_words.wav";
+    QSoundEffect* shortSound = nullptr;
+    QSoundEffect* longSound = nullptr;
+    QSoundEffect* delimetrSound = nullptr;
+    QSoundEffect* delimetrCharSound = nullptr;
 
 };
 

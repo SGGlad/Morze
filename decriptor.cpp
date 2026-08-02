@@ -9,6 +9,7 @@ Decriptor::Decriptor(MainWindow* main, QWidget *parent)
     setWindowTitle("Шифрофщик Морзе");
     ui->DecriptedText->setReadOnly(true);
     ui->Note->setCheckable(true);
+    ui->Note->setIcon(QIcon("Sourse/Icons/icon-info.png"));
 }
 
 Decriptor::~Decriptor()

@@ -7,9 +7,6 @@
 #include <QFile>
 #include <QFileDialog>
 #include "morze/morze.hpp"
-#include <SFML/Audio.hpp>
-#include <QTimer>
-
 
 
 QT_BEGIN_NAMESPACE
@@ -31,6 +28,8 @@ public:
     QString getLongSound();
     QString getDelimetr();
     QString getDelimrtrSound();
+    QString getDelimetrCharSymbol();
+    QString getDelimetrCharSound();
     morze::Dictionary getDictionary();
 
     void setShortSymbol(QString symbol);
@@ -39,6 +38,8 @@ public:
     void setLongSound(QString fileName);
     void setDelimetr(QString symbol);
     void setDelimetrSound(QString fileName);
+    void setDelimetrCharSymbol(QString symbol);
+    void setDelimetrCharSound(QString fileName);
     void updateDict();
 private slots:
     void on_Settings_button_clicked();
@@ -52,9 +53,11 @@ private:
     QString shortSymbol_ = ".";
     QString longSymbol_ = "-";
     QString delimetr_ = "/";
-    QString shortSound_ = "../../Sounds/short.wav";
-    QString longSound_ = "../../Sounds/long.wav";
-    QString delimetrSound_ = "../../Sounds/pause.wav";
+    QString delimetrChar_ = " ";
+    QString shortSound_ = "Sourse/Sounds/short.wav";
+    QString longSound_ = "Sourse/Sounds/long.wav";
+    QString delimetrSound_ = "Sourse/Sounds/pause_btw_words.wav";
+    QString delimetrCharSound_ = "Sourse/Sounds/pause.wav";
     morze::Dictionary dict;
 
 

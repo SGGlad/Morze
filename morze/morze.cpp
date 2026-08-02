@@ -5,13 +5,15 @@
 
 namespace morze{
 
-Dictionary::Dictionary(QString& long_symbol, QString& short_symbol, QString& delimetr){
-    Set_dictionary(long_symbol, short_symbol, delimetr);
+Dictionary::Dictionary(QString& long_symbol, QString& short_symbol, QString& delimetr, QString& delimetrChar){
+    Set_dictionary(long_symbol, short_symbol, delimetr, delimetrChar);
 }
-void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QString& delimetr){
+void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QString& delimetr, QString& delimetrChar){
     auto s = short_symbol;
     auto l = long_symbol;
     delimetr_ = delimetr;
+    delimetrChar_ = delimetrChar;
+
     // fill the international dictionary's variant (TO morze code)
     international_code["a"] = s+l;
     international_code["b"] = l+s+s+s;
@@ -275,32 +277,32 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
 
 }
 
-QString Encript(QString& originalText, Dictionary dict, Mode mode){
-    originalText = originalText.toLower();
-    QString encodered_text = "";
-    int index = 0;
-    if (mode == Mode::EN){
-        for(auto symbol : originalText){
-            if (symbol != " " && (index+1 == originalText.size() || originalText[index+1] == " ")){
-                encodered_text += dict.international_code.at(symbol);
-            }else{
-                if(symbol != " "){
-                    encodered_text += dict.international_code.at(symbol)+" ";
+    QString Encript(QString& originalText, Dictionary dict, Mode mode){
+        originalText = originalText.toLower();
+        QString encodered_text = "";
+        int index = 0;
+        if (mode == Mode::EN){
+            for(auto symbol : originalText){
+                if (symbol != dict.delimetrChar_ && (index+1 == originalText.size() || originalText[index+1] == dict.delimetrChar_)){
+                    encodered_text += dict.international_code.at(symbol);
                 }else{
-                    encodered_text+=dict.delimetr_;
+                    if(symbol != dict.delimetrChar_){
+                        encodered_text += dict.international_code.at(symbol)+dict.delimetrChar_;
+                    }else{
+                        encodered_text+=dict.delimetr_;
+                    }
                 }
+                ++index;
             }
-            ++index;
         }
-    }
     if (mode == Mode::RU){
         originalText.replace("ё", "е");
         for(auto symbol : originalText){
-            if (symbol != " " && (index+1 == originalText.size() || originalText[index+1] == " ")){
+            if (symbol != dict.delimetrChar_ && (index+1 == originalText.size() || originalText[index+1] == dict.delimetrChar_)){
                 encodered_text += dict.ru_code.at(symbol);
             }else{
                 if(symbol != " "){
-                    encodered_text += dict.ru_code.at(symbol)+" ";
+                    encodered_text += dict.ru_code.at(symbol)+dict.delimetrChar_;
                 }else{
                     encodered_text+=dict.delimetr_;
                 }
@@ -319,21 +321,20 @@ QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
     if (mode == Mode::EN){
         for(int i = 0; i < size; ++i){
             QString sign = encriptedText[i];
-            std::cout<<"i:"<<i<<std::endl;
-            if (sign != dict.delimetr_ && sign != " "){
+            if (sign != dict.delimetr_ && sign != dict.delimetrChar_){
                 symbol+=sign;
                 if (i == size - 1){
                     word += dict.international_decode.at(symbol);
                     decripted_text += word;
                 }
             }
-            if (sign == " "){
+            if (sign == dict.delimetrChar_){
                 word += dict.international_decode.at(symbol);
                 symbol = "";
             }
             if (sign == dict.delimetr_){
-                word += symbol;
-                decripted_text += word+" ";
+                word += dict.international_decode.at(symbol);
+                decripted_text += word+dict.delimetrChar_;
                 word = "";
                 symbol = "";
             }
@@ -342,20 +343,20 @@ QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
     if (mode == Mode::RU){
         for(int i = 0; i < size; ++i){
             QString sign = encriptedText[i];
-            if (sign != dict.delimetr_ && sign != " "){
+            if (sign != dict.delimetr_ && sign != dict.delimetrChar_){
                 symbol+=sign;
                 if (i == size - 1){
                     word += dict.ru_decode.at(symbol);
                     decripted_text += word;
                 }
             }
-            if (sign == " "){
+            if (sign == dict.delimetrChar_){
                 word += dict.ru_decode.at(symbol);
                 symbol = "";
             }
             if (sign == dict.delimetr_){
                 word += dict.ru_decode.at(symbol);
-                decripted_text += word+" ";
+                decripted_text += word+dict.delimetrChar_;
                 word = "";
                 symbol = "";
             }

@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("Шифрофщик Морзе");
-    dict.Set_dictionary(longSymbol_, shortSymbol_, delimetr_);
+    dict.Set_dictionary(longSymbol_, shortSymbol_, delimetr_, delimetrChar_);
 }
 
 MainWindow::~MainWindow()
@@ -24,6 +24,8 @@ QString MainWindow::getShortSound(){return shortSound_;}
 QString MainWindow::getLongSound(){return longSound_;}
 QString MainWindow::getDelimetr(){return delimetr_;}
 QString MainWindow::getDelimrtrSound(){return delimetrSound_;}
+QString MainWindow::getDelimetrCharSymbol(){return delimetrChar_;}
+QString MainWindow::getDelimetrCharSound(){return delimetrCharSound_;}
 morze::Dictionary MainWindow::getDictionary(){return dict;}
 
 void MainWindow::setShortSymbol(QString symbol){
@@ -44,8 +46,14 @@ void MainWindow::setDelimetr(QString symbol){
 void MainWindow::setDelimetrSound(QString fileName){
     delimetrSound_ = fileName;
 }
+void MainWindow::setDelimetrCharSymbol(QString symbol){
+    delimetrChar_ = symbol;
+}
+void MainWindow::setDelimetrCharSound(QString fileName){
+    delimetrCharSound_ = fileName;
+}
 void MainWindow::updateDict(){
-    dict.Set_dictionary(longSymbol_, shortSymbol_, delimetr_);
+    dict.Set_dictionary(longSymbol_, shortSymbol_, delimetr_, delimetrChar_);
 }
 
 void MainWindow::on_Settings_button_clicked()

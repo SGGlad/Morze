@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
+set(CMAKE_BUILD_TYPE Release)
 
 project(Morze VERSION 0.1 LANGUAGES CXX)
 
@@ -11,6 +12,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Multimedia)
+
 
 set(PROJECT_SOURCES
         main.cpp
@@ -29,10 +32,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         settings.h settings.cpp settings.ui
         encriptor.h encriptor.cpp encriptor.ui
         decriptor.h decriptor.cpp decriptor.ui
-        Sounds/long.wav
-        Sounds/pause.wav
-        Sounds/short.wav
-        miniaudio/miniaudio.cpp miniaudio/miniaudio.h
 
 
 
@@ -54,13 +53,10 @@ else()
         )
     endif()
 endif()
-set(SFML_STATIC_LIBRARIES ON)
-set(CMAKE_PREFIX_PATH C:/SFML/SFML-3.1.0/lib/cmake/SFML)
 
-find_package(SFML 3 COMPONENTS Audio REQUIRED)
 
-target_link_libraries(Morze PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(Morze PRIVATE SFML::Audio)
+target_link_libraries(Morze PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Gui Qt${QT_VERSION_MAJOR}::Network)
+target_link_libraries(Morze PRIVATE Qt6::Multimedia)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

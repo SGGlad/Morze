@@ -10,14 +10,15 @@ enum class Mode{
 };
 
 struct Dictionary{
-    Dictionary(QString& long_symbol, QString& short_symbol, QString& delimetr);
+    Dictionary(QString& long_symbol, QString& short_symbol, QString& delimetr, QString& delimetrChar);
     Dictionary() = default;
     std::map<QString, QString> ru_code;
     std::map<QString, QString> ru_decode;
     std::map<QString, QString> international_code;
     std::map<QString, QString> international_decode;
     QString delimetr_;
-    void Set_dictionary(QString& long_symbol, QString& short_symbol, QString& delimetr);
+    QString delimetrChar_;
+    void Set_dictionary(QString& long_symbol, QString& short_symbol, QString& delimetr, QString& delimetrChar);
 };
 
 
