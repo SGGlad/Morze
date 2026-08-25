@@ -18,6 +18,8 @@ struct Dictionary{
     std::map<QString, QString> international_decode;
     QString delimetr_;
     QString delimetrChar_;
+    QString short_symbol_;
+    QString long_symbol_;
     void Set_dictionary(QString& long_symbol, QString& short_symbol, QString& delimetr, QString& delimetrChar);
 };
 

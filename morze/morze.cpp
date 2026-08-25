@@ -11,6 +11,8 @@ Dictionary::Dictionary(QString& long_symbol, QString& short_symbol, QString& del
 void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QString& delimetr, QString& delimetrChar){
     auto s = short_symbol;
     auto l = long_symbol;
+    short_symbol_ = short_symbol;
+    long_symbol_ = long_symbol;
     delimetr_ = delimetr;
     delimetrChar_ = delimetrChar;
 
@@ -314,51 +316,73 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
 }
 
 QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
+    QString sign = "";
+    QString long_sign = "";
     QString decripted_text = "";
     QString symbol = "";
     QString word = "";
+
     int size = encriptedText.size();
     if (mode == Mode::EN){
         for(int i = 0; i < size; ++i){
-            QString sign = encriptedText[i];
+            sign += encriptedText[i];
+            if(sign != dict.short_symbol_ && sign != dict.long_symbol_ && sign != dict.delimetrChar_ && sign != dict.delimetr_){
+                continue;
+            }
             if (sign != dict.delimetr_ && sign != dict.delimetrChar_){
-                symbol+=sign;
+                symbol += sign;
+                sign = "";
                 if (i == size - 1){
                     word += dict.international_decode.at(symbol);
                     decripted_text += word;
+                    continue;
                 }
             }
             if (sign == dict.delimetrChar_){
                 word += dict.international_decode.at(symbol);
                 symbol = "";
+                sign = "";
+                continue;
             }
             if (sign == dict.delimetr_){
                 word += dict.international_decode.at(symbol);
                 decripted_text += word+dict.delimetrChar_;
                 word = "";
                 symbol = "";
+                sign = "";
+                continue;
             }
+
         }
     }
     if (mode == Mode::RU){
         for(int i = 0; i < size; ++i){
-            QString sign = encriptedText[i];
+            sign += encriptedText[i];
+            if(sign != dict.short_symbol_ && sign != dict.long_symbol_ && sign != dict.delimetrChar_ && sign != dict.delimetr_){
+                continue;
+            }
             if (sign != dict.delimetr_ && sign != dict.delimetrChar_){
                 symbol+=sign;
+                sign = "";
                 if (i == size - 1){
                     word += dict.ru_decode.at(symbol);
                     decripted_text += word;
+                    continue;
                 }
             }
             if (sign == dict.delimetrChar_){
                 word += dict.ru_decode.at(symbol);
                 symbol = "";
+                sign = "";
+                continue;
             }
             if (sign == dict.delimetr_){
                 word += dict.ru_decode.at(symbol);
                 decripted_text += word+dict.delimetrChar_;
                 word = "";
                 symbol = "";
+                sign = "";
+                continue;
             }
         }
     }

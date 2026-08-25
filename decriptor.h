@@ -22,7 +22,6 @@ private slots:
     void on_SaveResultTXT_clicked();
     void on_Cancel_clicked();
     void on_Note_clicked(bool checked);
-
     void on_SetMode_activated(int index);
 
 private:

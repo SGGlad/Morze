@@ -23,6 +23,9 @@
       <height>91</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Дешифровка</string>
     </property>
@@ -36,6 +39,9 @@
       <height>91</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Шифровка</string>
     </property>
@@ -48,6 +54,9 @@
       <width>91</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="text">
      <string>Настройки</string>

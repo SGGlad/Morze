@@ -1,4 +1,5 @@
 #include "settings.h"
+#include "encriptor.h"
 #include "ui_settings.h"
 #include "miniaudio/miniaudio.h"
 
@@ -106,7 +107,7 @@ void Settings::on_SetShortSound_clicked()
         QString filename = QFileDialog::getOpenFileName(this, "Выбор файла", ("*wav"));
         if (filename != settingDelimetrSound_ && filename != settingLongSound_ && filename != settingDelimetrCharSound_){
             settingShortSound_ = filename;
-            shortSound->setSource(QUrl::fromLocalFile(filename));
+            shortSound->setSource(QUrl::fromLocalFile(settingShortSound_));
             ui->ShortSoundError->setText("");
         }else{
             ui->ShortSoundError->setText("Уже используется");
@@ -131,7 +132,7 @@ void Settings::on_SetDelimetrSound_clicked()
     try{
         QString filename = QFileDialog::getOpenFileName(this, "Выбор файла", ("*wav"));
         if (filename != settingLongSound_ && filename != settingShortSound_ && filename != settingDelimetrCharSound_){
-            delimetrSound->setSource(QUrl::fromLocalFile(filename));
+            delimetrSound->setSource(QUrl::fromLocalFile(settingDelimetrSound_));
             settingDelimetrSound_ = filename;
             ui->DelimetrSoundError->setText("");
         }else{
@@ -144,7 +145,7 @@ void Settings::on_SetDelimetrCharSound_clicked()
     try{
         QString filename = QFileDialog::getOpenFileName(this, "Выбор файла", ("*wav"));
         if (filename != settingLongSound_ && filename != settingShortSound_ && filename != settingDelimetrSound_){
-            delimetrCharSound->setSource(QUrl::fromLocalFile(filename));
+            delimetrCharSound->setSource(QUrl::fromLocalFile(settingDelimetrCharSound_));
             settingDelimetrCharSound_ = filename;
             ui->DelimetrCharSoundError->setText("");
         }else{
@@ -158,6 +159,7 @@ void Settings::on_ShortSound_clicked()
 {
     try{
         if(shortSound->isLoaded()){
+            ui->ShortSoundError->setText("");
             shortSound->play();
         }else{
             ui->ShortSoundError->setText("Не загружен");
@@ -168,7 +170,9 @@ void Settings::on_LongSound_2_clicked()
 {
     try{
         if(longSound->isLoaded()){
+            ui->LongSoundError->setText("");
             longSound->play();
+
         }else{
             ui->LongSoundError->setText("Не загружен");
         }
@@ -178,6 +182,7 @@ void Settings::on_DelimetrSound_clicked()
 {
     try{
         if(delimetrSound->isLoaded()){
+            ui->DelimetrSoundError->setText("");
             delimetrSound->play();
         }else{
             ui->DelimetrSoundError->setText("Не загружен");
@@ -189,6 +194,7 @@ void Settings::on_DelimetrCharSound_clicked()
 {
     try{
         if(delimetrCharSound->isLoaded()){
+            ui->DelimetrCharSoundError->setText("");
             delimetrCharSound->play();
         }else{
             ui->DelimetrCharSoundError->setText("Не загружен");
@@ -210,12 +216,36 @@ void Settings::on_ApplyButton_clicked()
     main_window->setDelimetrCharSymbol(settingDelimetrChar_);
     main_window->setDelimetrCharSound(settingDelimetrCharSound_);
     main_window->updateDict();
+    main_window->setShortSoundData(settingShortSound_);
+    main_window->setLongSoundData(settingLongSound_);
+    main_window->setDelimetrSoundData(settingDelimetrSound_);
+    main_window->setDelimetrCharSoundData(settingDelimetrCharSound_);
+    main_window->encriptor_window->Update(settingShortSound_, settingLongSound_, settingDelimetrSound_, settingDelimetrCharSound_);
 }
 
 void Settings::on_CancelButton_clicked()
 {
     this->close();
     main_window->show();
-    delete this;
+    ui->ShortSymbol->setText(main_window->getShortSymbol());
+    ui->LongSymbol->setText(main_window->getLongSymbol());
+    ui->Delimetr->setText(main_window->getDelimetr());
+    ui->DelimetrChar->setText(main_window->getDelimetrCharSymbol());
+    ui->ShortSymbolTextError->setText("");
+    ui->LongSymbolTextError->setText("");
+    ui->DelimetrSymbolTextError->setText("");
+    ui->DelimetrCharSymbolTextError->setText("");
+    ui->ShortSoundError->setText("");
+    ui->LongSoundError->setText("");
+    ui->DelimetrSoundError->setText("");
+    ui->DelimetrCharSoundError->setText("");
+    QString settingShortSymbol_ = ".";
+    QString settingLongSymbol_ = "-";
+    QString settingDelimetr_ = "/";
+    QString settingDelimetrChar_ = " ";
+    QString settingDelimetrCharSound_ = "Sourse/Sounds/pause.wav";
+    QString settingShortSound_ = "Sourse/Sounds/short.wav";
+    QString settingLongSound_ = "Sourse/Sounds/long.wav";
+    QString settingDelimetrSound_ = "Sourse/Sounds/pause_btw_words.wav";
 }
 
