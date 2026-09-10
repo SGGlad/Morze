@@ -3,7 +3,6 @@
 #include "settings.h"
 #include "encriptor.h"
 #include "decriptor.h"
-#include <algorithm>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -117,7 +116,6 @@ QByteArray MainWindow::GetSoundData(QString& filename){
         audioData.slice(pos+4);
         return audioData;
     }
-
 }
 
 

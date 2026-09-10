@@ -2,6 +2,7 @@
 #include<fstream>
 #include"morze.hpp"
 #include <iostream>
+#include<QDebug>
 
 namespace morze{
 
@@ -139,7 +140,6 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
     international_decode[l+s+l+s+l] = "<work begin>";
     international_decode[s+s+s+s+s+s+s+s] = "<error>";
 
-    // make for russian
     //fill the russian ddictionary's variant (FROM morze code)
     ru_decode[s+l] = "а";
     ru_decode[l+s+s+s] = "б";
@@ -285,10 +285,10 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
         int index = 0;
         if (mode == Mode::EN){
             for(auto symbol : originalText){
-                if (symbol != dict.delimetrChar_ && (index+1 == originalText.size() || originalText[index+1] == dict.delimetrChar_)){
+                if (symbol != " " && (index+1 == originalText.size() || originalText[index+1] == " ")){
                     encodered_text += dict.international_code.at(symbol);
                 }else{
-                    if(symbol != dict.delimetrChar_){
+                    if(symbol != " "){
                         encodered_text += dict.international_code.at(symbol)+dict.delimetrChar_;
                     }else{
                         encodered_text+=dict.delimetr_;
@@ -300,7 +300,7 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
     if (mode == Mode::RU){
         originalText.replace("ё", "е");
         for(auto symbol : originalText){
-            if (symbol != dict.delimetrChar_ && (index+1 == originalText.size() || originalText[index+1] == dict.delimetrChar_)){
+            if (symbol != " " && (index+1 == originalText.size() || originalText[index+1] == " ")){
                 encodered_text += dict.ru_code.at(symbol);
             }else{
                 if(symbol != " "){
@@ -317,7 +317,6 @@ void Dictionary::Set_dictionary(QString& long_symbol, QString& short_symbol,QStr
 
 QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
     QString sign = "";
-    QString long_sign = "";
     QString decripted_text = "";
     QString symbol = "";
     QString word = "";
@@ -337,6 +336,7 @@ QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
                     decripted_text += word;
                     continue;
                 }
+                continue;
             }
             if (sign == dict.delimetrChar_){
                 word += dict.international_decode.at(symbol);
@@ -346,7 +346,7 @@ QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
             }
             if (sign == dict.delimetr_){
                 word += dict.international_decode.at(symbol);
-                decripted_text += word+dict.delimetrChar_;
+                decripted_text += word+" ";
                 word = "";
                 symbol = "";
                 sign = "";
@@ -369,6 +369,7 @@ QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
                     decripted_text += word;
                     continue;
                 }
+                continue;
             }
             if (sign == dict.delimetrChar_){
                 word += dict.ru_decode.at(symbol);
@@ -378,7 +379,7 @@ QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
             }
             if (sign == dict.delimetr_){
                 word += dict.ru_decode.at(symbol);
-                decripted_text += word+dict.delimetrChar_;
+                decripted_text += word+" ";
                 word = "";
                 symbol = "";
                 sign = "";
@@ -386,7 +387,11 @@ QString Decript(QString& encriptedText, Dictionary dict, Mode mode){
             }
         }
     }
-    return decripted_text;
+    if(sign != ""){
+        throw "Не удалось дешифровать";
+    }else{
+        return decripted_text;
+    }
 }
 }
 

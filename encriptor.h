@@ -5,6 +5,7 @@
 #include <QSoundEffect>
 #include <QMediaPlayer>
 #include "mainwindow.h"
+#include "AudioFile.h"
 
 
 namespace Ui {
@@ -30,7 +31,6 @@ private slots:
     void on_SaveResultTXT_clicked();
     void on_SetMode_activated(int index);
     void on_Play_clicked(bool checked);
-
     void on_SaveResultWAV_clicked();
 
 private:
@@ -39,10 +39,10 @@ private:
     QString encoderedText;
     morze::Mode mode = morze::Mode::EN;
     bool needPlay;
-    QMediaPlayer* player = nullptr;
-    QMediaPlayer* player2 = nullptr;
-    QMediaPlayer* player3 = nullptr;
-    QMediaPlayer* player4 = nullptr;
+    AudioFile<double>* player = nullptr;
+    AudioFile<double>* player2 = nullptr;
+    AudioFile<double>* player3 = nullptr;
+    AudioFile<double>* player4 = nullptr;
     QSoundEffect* shortSound = nullptr;
     QSoundEffect* longSound = nullptr;
     QSoundEffect* delimetrSound = nullptr;

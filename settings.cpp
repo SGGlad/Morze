@@ -1,7 +1,6 @@
 #include "settings.h"
 #include "encriptor.h"
 #include "ui_settings.h"
-#include "miniaudio/miniaudio.h"
 
 Settings::Settings(MainWindow* main, QWidget *parent)
     : QDialog(parent)
@@ -20,7 +19,7 @@ Settings::Settings(MainWindow* main, QWidget *parent)
     ui->ShortSymbol->setText(main_window->getShortSymbol());
     ui->LongSymbol->setText(main_window->getLongSymbol());
     ui->Delimetr->setText(main_window->getDelimetr());
-    ui->DelimetrChar->setText(main_window->getDelimetrCharSymbol());
+    ui->DelimetrChar->setText("<Пробел>");
     ui->ShortSound->setIcon(QIcon("Sourse/Icons/icon-sound.png"));
     ui->LongSound_2->setIcon(QIcon("Sourse/Icons/icon-sound.png"));
     ui->DelimetrSound->setIcon(QIcon("Sourse/Icons/icon-sound.png"));
@@ -39,6 +38,9 @@ Settings::~Settings()
 void Settings::on_ShortSymbol_textEdited(const QString &symbol)
 {
     if (symbol != ""){
+        if(symbol == " "){
+            ui->ShortSymbol->setText("<Пробел>");
+        }
         if (symbol != settingLongSymbol_ && symbol != settingDelimetr_ && symbol != settingDelimetrChar_){
             settingShortSymbol_ = symbol;
             ui->ShortSymbolTextError->setText("");
@@ -55,6 +57,9 @@ void Settings::on_ShortSymbol_textEdited(const QString &symbol)
 void Settings::on_LongSymbol_textEdited(const QString &symbol)
 {
     if (symbol != ""){
+        if(symbol == " "){
+            ui->LongSymbol->setText("<Пробел>");
+        }
         if (symbol != settingShortSymbol_ && symbol!=settingDelimetr_ && symbol != settingDelimetrChar_){
             settingLongSymbol_ = symbol;
             ui->LongSymbolTextError->setText("");
@@ -71,6 +76,9 @@ void Settings::on_LongSymbol_textEdited(const QString &symbol)
 void Settings::on_Delimetr_textEdited(const QString &symbol)
 {
     if (symbol != ""){
+        if(symbol == " "){
+            ui->Delimetr->setText("<Пробел>");
+        }
         if (symbol != settingLongSymbol_ && symbol != settingShortSymbol_ && symbol != settingDelimetrChar_){
             settingDelimetr_ = symbol;
             ui->DelimetrSymbolTextError->setText("");
@@ -87,6 +95,9 @@ void Settings::on_Delimetr_textEdited(const QString &symbol)
 void Settings::on_DelimetrChar_textEdited(const QString &symbol)
 {
     if (symbol != ""){
+        if(symbol == " "){
+            ui->DelimetrChar->setText("<Пробел>");
+        }
         if (symbol != settingLongSymbol_ && symbol != settingShortSymbol_ && symbol != settingDelimetr_){
             settingDelimetrChar_ = symbol;
             ui->DelimetrCharSymbolTextError->setText("");
@@ -227,10 +238,18 @@ void Settings::on_CancelButton_clicked()
 {
     this->close();
     main_window->show();
-    ui->ShortSymbol->setText(main_window->getShortSymbol());
-    ui->LongSymbol->setText(main_window->getLongSymbol());
-    ui->Delimetr->setText(main_window->getDelimetr());
-    ui->DelimetrChar->setText(main_window->getDelimetrCharSymbol());
+    if(main_window->getShortSymbol() == " "){
+        ui->ShortSymbol->setText("<Пробел>");
+    }else{ui->ShortSymbol->setText(main_window->getShortSymbol());}
+    if(main_window->getLongSymbol() == " "){
+        ui->LongSymbol->setText("<Пробел>");
+    }else{ui->LongSymbol->setText(main_window->getLongSymbol());}
+    if(main_window->getDelimetr() == " "){
+        ui->Delimetr->setText("<Пробел>");
+    }else{ui->Delimetr->setText(main_window->getDelimetr());}
+    if(main_window->getDelimetrCharSymbol() == " "){
+        ui->DelimetrChar->setText("<Пробел>");
+    }else{ui->DelimetrChar->setText(main_window->getDelimetrCharSymbol());}
     ui->ShortSymbolTextError->setText("");
     ui->LongSymbolTextError->setText("");
     ui->DelimetrSymbolTextError->setText("");

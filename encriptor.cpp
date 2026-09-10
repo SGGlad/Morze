@@ -15,21 +15,21 @@ Encriptor::Encriptor(MainWindow* main, QWidget *parent)
     ui->EncoderedText->setReadOnly(true);
     ui->Play->setCheckable(true);
     shortSound = new QSoundEffect;
-    player = new QMediaPlayer;
+    player = new AudioFile<double>;
     shortSound->setSource(QUrl::fromLocalFile(main_window->getShortSound()));
-    player->setSource(QUrl::fromLocalFile(main_window->getShortSound()));
+    player->load(main_window->getShortSound().toStdString());
     longSound = new QSoundEffect;
-    player2 = new QMediaPlayer;
+    player2 = new AudioFile<double>;
     longSound->setSource(QUrl::fromLocalFile(main_window->getLongSound()));
-    player2->setSource(QUrl::fromLocalFile(main_window->getLongSound()));
+    player2->load(main_window->getLongSound().toStdString());
     delimetrSound = new QSoundEffect;
-    player3 = new QMediaPlayer;
+    player3 = new AudioFile<double>;
     delimetrSound->setSource(QUrl::fromLocalFile(main_window->getDelimrtrSound()));
-    player3->setSource(QUrl::fromLocalFile(main_window->getDelimrtrSound()));
+    player3->load(main_window->getDelimrtrSound().toStdString());
     delimetrCharSound = new QSoundEffect;
-    player4 = new QMediaPlayer;
+    player4 = new AudioFile<double>;
     delimetrCharSound->setSource(QUrl::fromLocalFile(main_window->getDelimetrCharSound()));
-    player4->setSource(QUrl::fromLocalFile(main_window->getDelimetrCharSound()));
+    player4->load(main_window->getDelimetrCharSound().toStdString());
 }
 
 Encriptor::~Encriptor()
@@ -136,29 +136,29 @@ void Encriptor::on_Play_clicked(bool checked)
 
 void Encriptor::PlaySound(){
     try{
-        shortSoundDuration = player->duration();
-        longSoundDuration = player2 ->duration();
-        delimetrSoundDuration = player3->duration();
-        delimetrCharSoundDuration = player4->duration();
+        shortSoundDuration = player->getLengthInSeconds();
+        longSoundDuration = player2 ->getLengthInSeconds();
+        delimetrSoundDuration = player3->getLengthInSeconds();
+        delimetrCharSoundDuration = player4->getLengthInSeconds();
         for(auto sym : encoderedText){
             if(!needPlay){
                 break;
             }
             if(sym == main_window->getShortSymbol()){
                 shortSound->play();
-                std::this_thread::sleep_for(std::chrono::milliseconds(shortSoundDuration));
+                std::this_thread::sleep_for(std::chrono::seconds(shortSoundDuration));
             }
             if(sym == main_window->getLongSymbol()){
                 longSound->play();
-                std::this_thread::sleep_for(std::chrono::milliseconds(longSoundDuration));
+                std::this_thread::sleep_for(std::chrono::seconds(longSoundDuration));
             }
             if(sym == main_window->getDelimetr()){
                 delimetrSound->play();
-                std::this_thread::sleep_for(std::chrono::milliseconds(delimetrSoundDuration));
+                std::this_thread::sleep_for(std::chrono::seconds(delimetrSoundDuration));
             }
             if(sym == main_window->getDelimetrCharSymbol()){
                 delimetrCharSound->play();
-                std::this_thread::sleep_for(std::chrono::milliseconds(delimetrCharSoundDuration));
+                std::this_thread::sleep_for(std::chrono::seconds(delimetrCharSoundDuration));
             }
         }
         needPlay = false;
@@ -167,13 +167,13 @@ void Encriptor::PlaySound(){
 
 void Encriptor::Update(QString shortS, QString longS, QString delS, QString delCharS){
     shortSound->setSource(QUrl::fromLocalFile(shortS));
-    player->setSource(QUrl::fromLocalFile(shortS));
+    player->load(shortS.toStdString());
     longSound->setSource(QUrl::fromLocalFile(longS));
-    player2->setSource(QUrl::fromLocalFile(longS));
+    player2->load(longS.toStdString());
     delimetrSound->setSource(QUrl::fromLocalFile(delS));
-    player3->setSource(QUrl::fromLocalFile(delS));
+    player3->load(delS.toStdString());
     delimetrCharSound->setSource(QUrl::fromLocalFile(delCharS));
-    player4->setSource(QUrl::fromLocalFile(delCharS));
+    player4->load(delCharS.toStdString());
 }
 
 void Encriptor::on_SaveResultWAV_clicked()
